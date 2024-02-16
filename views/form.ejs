@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>PORTFOLIO FORM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="text">
+      PORTFOLIO FORM
+    </div>
+    <form action="/submit" method="post">
+      <div class="form-row">
+        <div class="input-data">
+          <input type="text" name="portfolio_title" required>
+          <div class="underline"></div>
+          <label for="portfolio_title">Enter Portfolio Title</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-data">
+          <input type="text" name="profile_photo" required>
+          <div class="underline"></div>
+          <label for="profile_photo">Profile Photo URL</label>
+        </div>
+      </div>
+     <%for (let i = 1 ; i<=certificates;i++){%> 
+      
+      <div class="form-row">
+        <div class="input-data certificate-details">
+          <input type="text" name="certificate_title[]" required>
+          <div class="underline"></div>
+          <label for="certificate_title">Certificate Title</label>
+        </div>
+        <div class="input-data certificate-details">
+          <input type="text" name="certificate_photo[]" placeholder="Certificate image url">
+        </div>
+      </div>
+     <%}%> 
+
+      <div class="form-row">
+        <div class="input-data">
+          <input type="text" name="college_name" required>
+          <div class="underline"></div>
+          <label for="college_name">College Name</label>
+        </div>
+      </div>
+
+      <%for (let i = 1 ; i<=skills;i++){%>
+      <div class="form-row">
+        <div class="input-data">
+          <input type="text" name="skills[]" required>
+          <div class="underline"></div>
+          <label for="skills">Skills</label>
+        </div>
+        <div class="input-data">
+          <input type="text" name="percentage[]" required>
+          <div class="underline"></div>
+          <label for="percentage">Percentage</label>
+        </div>
+      </div>
+      <% }%>
+      
+        <%for (let i = 1 ; i<=workroles;i++){%> 
+      
+          <div class="form-row work-experience">
+            <div class="input-data">
+              <input type="text" name="work_title[]" required>
+              <div class="underline"></div>
+              <label for="work_title">Work Title</label>
+            </div>
+            <div class="input-data">
+              <input type="text" name="work_role[]" required>
+              <div class="underline"></div>
+              <label for="work_role">Work Role</label>
+            </div>
+            <div class="input-data">
+              <input type="text" name="timeline[]" required>
+              <div class="underline"></div>
+              <label for="timeline">Timeline</label>
+            </div>
+          </div>
+     <%}%> 
+
+        <%for (let i = 1 ; i<=projects;i++){%> 
+      
+          <div class="form-row project-details">
+            <div class="input-data">
+              <input type="text" name="project_name[]" required>
+              <div class="underline"></div>
+              <label for="project_name">Project Name</label>
+            </div>
+            <div class="input-data">
+              <input type="text" name="github_repo[]" required>
+              <div class="underline"></div>
+              <label for="github_repo">Project GitHub</label>
+            </div>
+            <div class="input-data">
+              <input type="text" name="thumbnail[]" required>
+              <div class="underline"></div>
+              <label for="thumbnail">Thumbnail</label>
+            </div>
+          </div>
+     <%}%> 
+
+      <div class="form-row">
+        <div class="input-data">
+          <input type="text" name="linkedin" required>
+          <div class="underline"></div>
+          <label for="linkedin">LinkedIn</label>
+        </div>
+        <div class="input-data">
+          <input type="text" name="github" required>
+          <div class="underline"></div>
+          <label for="github">GitHub</label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-data">
+          <input type="text" name="instagram" required>
+          <div class="underline"></div>
+          <label for="instagram">Instagram</label>
+        </div>
+      </div>
+
+      <div class="form-row submit-btn">
+        <div class="input-data">
+          <input type="submit" value="Submit">
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%);
+}
+
+.container {
+  max-width: 800px;
+  background: #fff;
+  width: 800px;
+  padding: 25px 40px 10px 40px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container .text {
+  text-align: center;
+  font-size: 41px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  background: -webkit-linear-gradient(right, #56d8e4, #9f01ea, #56d8e4, #9f01ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container form {
+  padding: 30px 0 0 0;
+}
+
+.container form .form-row {
+  display: flex;
+  margin: 32px 0;
+}
+
+form .form-row .input-data {
+  width: 100%;
+  height: 40px;
+  margin: 0 20px;
+  position: relative;
+}
+
+form .form-row .textarea {
+  height: 70px;
+}
+
+
+.input-data input,
+.textarea textarea {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 17px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+}
+
+.input-data input:focus ~ label,
+.textarea textarea:focus ~ label,
+.input-data input:valid ~ label,
+.textarea textarea:valid ~ label {
+  transform: translateY(-20px);
+  font-size: 14px;
+  color: #3498db;
+}
+
+.textarea textarea {
+  resize: none;
+  padding-top: 10px;
+}
+
+.input-data label {
+  position: absolute;
+  pointer-events: none;
+  bottom: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.textarea label {
+  width: 100%;
+  bottom: 40px;
+  background: #fff;
+}
+
+.input-data .underline {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+}
+
+.input-data .underline:before {
+  position: absolute;
+  content: "";
+  height: 2px;
+  width: 100%;
+  background: #3498db;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.input-data input:focus ~ .underline:before,
+.input-data input:valid ~ .underline:before,
+.textarea textarea:focus ~ .underline:before,
+.textarea textarea:valid ~ .underline:before {
+  transform: scale(1);
+}
+
+.submit-btn .input-data {
+    text-align: center;
+  }
+  
+  .submit-btn .input-data input {
+    background: linear-gradient(to right, #56d8e4, #9f01ea);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    
+    transition: background 0.3s ease;
+  }
+  
+  .submit-btn .input-data input:hover {
+    background: linear-gradient(to left, #56d8e4, #9f01ea);
+  }
+  
+
+</style>
+</html>
