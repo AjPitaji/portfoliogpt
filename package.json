@@ -1,0 +1,31 @@
+{
+  "name": "eduhacks-2024",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.2.0",
+    "@supabase/supabase-js": "^2.39.3",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "child_process": "^1.0.2",
+    "child-process": "^1.0.2",
+    "dotenv": "^16.4.4",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.18.0",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2",
+    "node-sass": "^9.0.0",
+    "nodemailer": "^6.9.9",
+    "sass-middleware": "^0.0.3",
+    "supabase": "^1.136.3"
+  }
+}
