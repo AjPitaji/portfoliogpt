@@ -149,6 +149,19 @@ async function query(prompt) {
 }
 app.post("/submit", async (req, res) => {
   const email = req.session.user.email; // Get the user ID from the session
+
+   const portfolioTitleExists = await supabase
+     .from("users")
+     .select("portfolio_title")
+     .eq("portfolio_title", req.body.portfolio_title);
+
+   if (portfolioTitleExists.data.length > 0) {
+     // If portfolio_title already exists, return a response
+     return res.json(
+       "Portfolio title already taken. Please choose a different one. go back <-"
+     );
+   }
+
   const work = await Promise.all(
     req.body.work_title.map(async (title, index) => ({
       title,
@@ -207,7 +220,7 @@ app.post("/submit", async (req, res) => {
     .eq("email", email)
     .select();
 
-  res.redirect("/portfolio/" + formData.portfolio_title);
+  res.render("mid",{name:formData.portfolio_title});
 });
 
 app.post("/mail", (req, res) => {
