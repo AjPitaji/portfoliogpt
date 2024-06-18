@@ -22,3 +22,5 @@ username = 'your_username'
 password = 'your_password'
 
 run_ftp_command(server, username, password)
+
+Host: ftp.dlptest.comUsername: dlpuserPassword: rNrKYTX9g7z3RgJRmxWuGHbeu
