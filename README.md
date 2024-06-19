@@ -1,11 +1,9 @@
-import subprocess
+# Connect to the server using SFTP protocol
+open sftp://fts150023@fts2.mfts.jpmchase.net -privatekey=W:\puttygen\LIQ_SSH2RSA_2048_prod.ppk
 
-def open_shell_and_run_command():
-    try:
-        # Open a new terminal window and run the command
-        subprocess.run(["gnome-terminal", "--", "bash", "-c", "ds tool; exec bash"], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"An error occurred: {e}")
+# Check if the session started successfully
+# List remote directory to check if the session is active
+ls
 
-if __name__ == "__main__":
-    open_shell_and_run_command()
+# Exit WinSCP
+exit
