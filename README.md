@@ -1,19 +1,23 @@
-import subprocess
+import xml.etree.ElementTree as ET
 
-# Define the WinSCP command and script file path
-winscp_path = r"C:\Program Files (x86)\WinSCP\WinSCP.com"
-script_path = r"I:\ds\check_ftp_connection.txt"
+def get_transmission_mode(xml_file):
+    # Parse the XML file
+    tree = ET.parse(xml_file)
+    root = tree.getroot()
 
-# Run the WinSCP command using subprocess
-result = subprocess.run([winscp_path, '/script', script_path], capture_output=True, text=True)
+    # Find the TransmissionMode tag
+    transmission_mode = root.find('TransmissionMode')
 
-# Check the output for authentication success
-if 'Authentication failed' in result.stdout or 'Host does not exist' in result.stdout:
-    print("Authentication failed or host does not exist.")
-elif 'Session started' in result.stdout:
-    print("Authentication successful.")
-else:
-    print("Could not determine the authentication status.")
+    # Check if the tag was found and return its text content
+    if transmission_mode is not None:
+        return transmission_mode.text
+    else:
+        return None
 
-# Print the full output for debugging purposes
-print("\nFull Output:\n", result.stdout)
+if __name__ == "__main__":
+    xml_file = 'example.xml'  # Replace with your XML file path
+    transmission_mode = get_transmission_mode(xml_file)
+    if transmission_mode:
+        print(f'TransmissionMode: {transmission_mode}')
+    else:
+        print('TransmissionMode tag not found')
