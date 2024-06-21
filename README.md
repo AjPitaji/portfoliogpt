@@ -1,18 +1,21 @@
-def get_chat_completion(prompt, model="gpt-3.5-turbo"):
-  
-   # Creating a message as required by the API
-   messages = [{"role": "user", "content": prompt}]
-  
-   # Calling the ChatCompletion API
-   response = openai.ChatCompletion.create(
-       model=model,
-       messages=messages,
-       temperature=0,
-   )
+import openai
 
-   # Returning the extracted response
-   return response.choices[0].message["content"]
+# Replace with your OpenAI API key
+api_key = "YOUR_API_KEY_HERE"
 
-response = get_chat_completion("Translate into Spanish: As a beginner data scientist, I'm excited to learn about OpenAI API!")
+# Set your OpenAI API key
+openai.api_key = api_key
 
-print(response)
+def get_gpt35_response(prompt, model="text-davinci-003", max_tokens=100):
+    response = openai.Completion.create(
+        engine=model,
+        prompt=prompt,
+        max_tokens=max_tokens
+    )
+    return response.choices[0].text.strip()
+
+# Example usage
+if __name__ == "__main__":
+    prompt = "Write a poem about the sea."
+    response = get_gpt35_response(prompt)
+    print(response)
