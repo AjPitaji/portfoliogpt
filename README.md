@@ -1,23 +1,18 @@
-import xml.etree.ElementTree as ET
+def get_chat_completion(prompt, model="gpt-3.5-turbo"):
+  
+   # Creating a message as required by the API
+   messages = [{"role": "user", "content": prompt}]
+  
+   # Calling the ChatCompletion API
+   response = openai.ChatCompletion.create(
+       model=model,
+       messages=messages,
+       temperature=0,
+   )
 
-def get_transmission_mode(xml_file):
-    # Parse the XML file
-    tree = ET.parse(xml_file)
-    root = tree.getroot()
+   # Returning the extracted response
+   return response.choices[0].message["content"]
 
-    # Find the TransmissionMode tag
-    transmission_mode = root.find('TransmissionMode')
+response = get_chat_completion("Translate into Spanish: As a beginner data scientist, I'm excited to learn about OpenAI API!")
 
-    # Check if the tag was found and return its text content
-    if transmission_mode is not None:
-        return transmission_mode.text
-    else:
-        return None
-
-if __name__ == "__main__":
-    xml_file = 'example.xml'  # Replace with your XML file path
-    transmission_mode = get_transmission_mode(xml_file)
-    if transmission_mode:
-        print(f'TransmissionMode: {transmission_mode}')
-    else:
-        print('TransmissionMode tag not found')
+print(response)
