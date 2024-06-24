@@ -1,21 +1,26 @@
-import openai
+import xml.etree.ElementTree as ET
 
-# Replace with your OpenAI API key
-api_key = "YOUR_API_KEY_HERE"
+# Sample XML content
+xml_content = '''<ftp>
+<transmissiontype>winscp</transmissiontype>
+<ftpprm>
+    <hostname>example.com</hostname>
+    <userid>user123</userid>
+    <ppkfilename>key.ppk</ppkfilename>
+</ftpprm>
+</ftp>'''
 
-# Set your OpenAI API key
-openai.api_key = api_key
+# Parse the XML content
+root = ET.fromstring(xml_content)
 
-def get_gpt35_response(prompt, model="text-davinci-003", max_tokens=100):
-    response = openai.Completion.create(
-        engine=model,
-        prompt=prompt,
-        max_tokens=max_tokens
-    )
-    return response.choices[0].text.strip()
+# Extract required elements
+transmission_type = root.find('transmissiontype').text
+hostname = root.find('ftpprm/hostname').text
+userid = root.find('ftpprm/userid').text
+ppkfilename = root.find('ftpprm/ppkfilename').text
 
-# Example usage
-if __name__ == "__main__":
-    prompt = "Write a poem about the sea."
-    response = get_gpt35_response(prompt)
-    print(response)
+# Print the extracted information
+print(f'Transmission Type: {transmission_type}')
+print(f'Hostname: {hostname}')
+print(f'User ID: {userid}')
+print(f'PPK Filename: {ppkfilename}')
