@@ -1,0 +1,102 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>demo</name>
+    <description>Demo project for Spring Boot SOAP with Pact</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.1</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <java.version>11</java.version>
+        <pact.broker.token>YOUR_PACTFLOW_API_TOKEN</pact.broker.token>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web-services</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>au.com.dius.pact.consumer</groupId>
+            <artifactId>junit5</artifactId>
+            <version>4.3.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>au.com.dius.pact.provider</groupId>
+            <artifactId>junit5</artifactId>
+            <version>4.3.6</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>au.com.dius.pact</groupId>
+                <artifactId>pact-jvm-consumer-maven</artifactId>
+                <version>4.3.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>publish</goal>
+                        </goals>
+                        <configuration>
+                            <pactBrokerUrl>https://<YOUR_PACTFLOW_SUBDOMAIN>.pactflow.io</pactBrokerUrl>
+                            <pactBrokerToken>${pact.broker.token}</pactBrokerToken>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>au.com.dius.pact</groupId>
+                <artifactId>pact-jvm-provider-maven</artifactId>
+                <version>4.3.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <serviceProviders>
+                                <serviceProvider>
+                                    <name>HelloWorldProvider</name>
+                                    <pactBrokerUrl>https://<YOUR_PACTFLOW_SUBDOMAIN>.pactflow.io</pactBrokerUrl>
+                                    <pactBrokerToken>${pact.broker.token}</pact.broker.token>
+                                    <verificationType>auto</verificationType>
+                                    <packagesToScan>com.example.demo</packagesToScan>
+                                    <providerVersion>${project.version}</providerVersion>
+                                    <honourPacts>
+                                        <pactSource>
+                                            <pactBrokerWithSelectors>
+                                                <consumerVersionSelectors>
+                                                    <branch>main</branch>
+                                                </consumerVersionSelectors>
+                                            </pactBrokerWithSelectors>
+                                        </pactSource>
+                                    </honourPacts>
+                                </serviceProvider>
+                            </serviceProviders>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
