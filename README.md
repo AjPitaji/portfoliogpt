@@ -1,26 +1,25 @@
-import xml.etree.ElementTree as ET
+import org.springdoc.core.customizers.OpenApiCustomizer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Paths;
 
-# Sample XML content
-xml_content = '''<ftp>
-<transmissiontype>winscp</transmissiontype>
-<ftpprm>
-    <hostname>example.com</hostname>
-    <userid>user123</userid>
-    <ppkfilename>key.ppk</ppkfilename>
-</ftpprm>
-</ftp>'''
+import java.util.List;
 
-# Parse the XML content
-root = ET.fromstring(xml_content)
+@Configuration
+public class SwaggerConfig {
 
-# Extract required elements
-transmission_type = root.find('transmissiontype').text
-hostname = root.find('ftpprm/hostname').text
-userid = root.find('ftpprm/userid').text
-ppkfilename = root.find('ftpprm/ppkfilename').text
+    @Value("${springdoc.paths-to-hide}")
+    private List<String> pathsToHide;
 
-# Print the extracted information
-print(f'Transmission Type: {transmission_type}')
-print(f'Hostname: {hostname}')
-print(f'User ID: {userid}')
-print(f'PPK Filename: {ppkfilename}')
+    @Bean
+    public OpenApiCustomizer openApiCustomizer() {
+        return openApi -> {
+            Paths paths = openApi.getPaths();
+            for (String path : pathsToHide) {
+                paths.remove(path);
+            }
+        };
+    }
+}
