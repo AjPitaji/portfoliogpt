@@ -1,36 +1,27 @@
-import org.springdoc.core.customizers.OpenApiCustomiser;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import subprocess
+from constants import USERNAME, PASSWORD, HOST, PORT, DBNAME, QUERY
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.PathItem;
-import io.swagger.v3.oas.models.Paths;
+# Construct the connection string
+conn_str = f"{USERNAME}/{PASSWORD}@{HOST}:{PORT}/{DBNAME}"
 
-import java.util.Map;
+# Construct the SQL*Plus command
+sqlplus_command = f"sqlplus -S {conn_str}"
 
-@Configuration
-public class SwaggerConfig {
+# Create the full SQL script
+sql_script = f"SET PAGESIZE 50000\nSET LINESIZE 32767\nSET FEEDBACK OFF\nSET HEADING OFF\n{QUERY};\nEXIT;\n"
 
-    private static final Logger logger = LoggerFactory.getLogger(SwaggerConfig.class);
+# Run the command using subprocess
+result = subprocess.run(
+    sqlplus_command,
+    input=sql_script,
+    text=True,
+    shell=True,
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE
+)
 
-    @Bean
-    public OpenApiCustomiser openApiCustomiser() {
-        return openApi -> {
-            logger.info("Starting OpenAPI customization");
-
-            // Log the paths
-            Paths paths = openApi.getPaths();
-            if (paths != null) {
-                for (Map.Entry<String, PathItem> entry : paths.entrySet()) {
-                    logger.info("Path: {}", entry.getKey());
-                }
-            } else {
-                logger.warn("No paths found in OpenAPI specification");
-            }
-
-            logger.info("Completed OpenAPI customization");
-        };
-    }
-}
+# Check for errors
+if result.returncode != 0:
+    print("Error:", result.stderr)
+else:
+    print("Query Result:\n", result.stdout.strip())
